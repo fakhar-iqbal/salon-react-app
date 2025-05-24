@@ -1,0 +1,15 @@
+.logo {
+  height: 60px;
+  width: 60px;
+  margin: 45px auto 0px auto;
+}
+.logo img {
+  height: 100%;
+  width: 100%;
+}
+
+.logo-lg {
+  height: 90px;
+  width: 90px;
+  margin: 45px auto 0px auto;
+}
