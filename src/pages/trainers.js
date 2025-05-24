@@ -7,7 +7,6 @@ import Modal from "../components/Modal";
 import "../styles/categories.css";
 import { db, auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getMessaging, getToken } from "firebase/messaging";
 
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import UsersTbody from "../components/users/UsersTbody";
