@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Settings from "./pages/settings";
 import Users from "./pages/users";
 import ContentVerification from "./pages/contentVerification";
+import Trainers from "./pages/trainers";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/users" element={<Users />} />
 
           <Route path="/settings" element={<Settings />} />
+          <Route path="/trainers" element={<Trainers />} />
           <Route
             path="/content-verification"
             element={<ContentVerification />}

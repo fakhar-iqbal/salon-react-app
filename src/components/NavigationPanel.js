@@ -1,11 +1,11 @@
 import { useNavigate, NavLink } from "react-router-dom";
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import { navigationOptions } from "../constants/navigationOptions";
 import signOutImage from "../assets/logoutIcon.svg";
 import "../styles/navigationPanel.css";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/userContext";
-import LogoImg from "../assets/logo.png";
+import LogoImg from "../assets/logoA.png";
 
 const NavigationPanel = (props) => {
   const { logout } = useContext(AuthContext);
@@ -18,8 +18,8 @@ const NavigationPanel = (props) => {
 
   return (
     <div className="navigation-panel">
-      <div className="logo">
-        <img src={LogoImg} />
+      <div className="logo" style={{marginTop:30}}>
+        <img src={LogoImg} style={{width:80, height:50}} />
       </div>
       <div className="options-container">
         <ul>

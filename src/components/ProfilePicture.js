@@ -6,14 +6,13 @@ const ProfilePicture = (props) => {
   return (
     <div className="profile-picture" style={props.style}>
       <img
-        style={
-          !props.picture
-            ? {
-                height: "40px",
-              }
-            : {}
+        style={{
+          height: "70px",
+          width: "100px",
+        }}
+        src={
+          "https://firebasestorage.googleapis.com/v0/b/augmentfit.appspot.com/o/sample%20Profile.png?alt=media&token=18105535-d61c-45e5-a8c8-9107d2409dc8"
         }
-        src={props.picture ? props.picture : ProfileIcon}
         alt="img"
       ></img>
     </div>

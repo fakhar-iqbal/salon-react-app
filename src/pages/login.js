@@ -6,9 +6,10 @@ import Headline from "../components/Headline";
 import InputField from "../components/InputField";
 import { FaEllipsisH } from "react-icons/fa";
 import "../styles/login.css";
+import "../styles/logo.css";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/userContext";
-import LogoImg from "../assets/logo.png";
+import LogoImg from "../assets/logoA.png";
 
 const Login = (props) => {
   const { login } = useContext(AuthContext);
@@ -45,7 +46,7 @@ const Login = (props) => {
     <div className="login">
       <div>
         <div className="logo-lg">
-          <img src={LogoImg} />
+          <img src={LogoImg} style={{width:100, height:60}} />
         </div>
         <Headline text="Back" line="Login to continue using account" />
 

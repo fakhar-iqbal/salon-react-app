@@ -7,6 +7,7 @@ import Modal from "../components/Modal";
 import "../styles/categories.css";
 import { db, auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getMessaging, getToken } from "firebase/messaging";
 
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import UsersTbody from "../components/users/UsersTbody";
@@ -62,16 +63,16 @@ export default function Users() {
       const user = res.user;
       await addDoc(addrefUser, {
         uid: user.uid,
-        bio: "",
-        dateOfBirth: "",
         email: addemail,
-        image: "",
         name: addname,
-        phoneNo: addphone,
-        posts: [],
-        subscribed: [],
-        subscribers: [],
-        username: addname,
+        phone: addphone,
+        userType:"Trainer",
+        avatar: "https://firebasestorage.googleapis.com/v0/b/augmentfit.appspot.com/o/sample%20Profile.png?alt=media&token=18105535-d61c-45e5-a8c8-9107d2409dc8",
+        gender:"",
+        age:0,
+        weight:0,
+        height:0,
+        bmi:0,
       });
       getUsers();
       setaddname("");
@@ -140,12 +141,12 @@ export default function Users() {
               return (
                 <UsersTbody
                   key={ind}
-                  profilePic={val.image}
+                  profilePic={val.avatar}
                   id={val.id}
                   name={val.name}
-                  username={val.username}
+                  username={val.name}
                   email={val.email}
-                  phone={val.phoneNo}
+                  phone={val.phone}
                   bio={val.bio}
                   dob={val.dateOfBirth}
                 />

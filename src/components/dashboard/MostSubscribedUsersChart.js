@@ -63,14 +63,16 @@ export default function MostSubscribedUsersChart({ usersData, screenWidth }) {
   const [data, setdata] = useState([]);
 
   useEffect(() => {
-    setdata(
-      usersData.map((data) => {
-        return {
-          ...data,
-          subscribersCount: data.subscribers.length + 1,
-        };
-      })
-    );
+    // setdata(
+    //   usersData.map((data) => {
+    //     return {
+    //       data
+    //     };
+    //   })
+    // );
+    setdata(usersData)
+
+    console.log(" post data in chart screen is : ", usersData)
   }, []);
 
   return (
@@ -94,7 +96,7 @@ export default function MostSubscribedUsersChart({ usersData, screenWidth }) {
       //   bottom: 5,
       // }}
     >
-      <XAxis dataKey="username" tickLine={false} axisLine={false} />
+      <XAxis dataKey="user" tickLine={false} axisLine={false} />
       <YAxis
         allowDecimals={false}
         tickLine={false}
@@ -118,11 +120,11 @@ export default function MostSubscribedUsersChart({ usersData, screenWidth }) {
         </linearGradient>{" "}
       </defs>
       <Bar
-        dataKey="subscribersCount"
+        dataKey="postcount"
         fill="#8884d8"
         radius={15}
         background={{ fill: "rgba(202, 200, 200, 0.2)", radius: 15 }}
-        barSize={screenWidth / 50}
+        barSize={screenWidth / 60}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-1`} fill={`url(#gradientColor)`} />

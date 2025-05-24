@@ -4,8 +4,8 @@ export const navigationOptions = [
     path: "/dashboard",
   },
   {
-    name: "Content Verification",
-    path: "/content-verification",
+    name: "Trainers",
+    path: "/trainers",
   },
   {
     name: "Users",

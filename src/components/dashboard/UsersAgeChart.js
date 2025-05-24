@@ -19,7 +19,7 @@ export default function UserAgeChart({ usersData, screenWidth, totalUsers }) {
   ];
 
   Object.keys(usersData).map((key) => {
-    data.push({ name: "Age " + key, value: usersData[key] + 3 });
+    data.push({ name: "BMI " + key, value: usersData[key] + 3 });
   });
 
   return (
