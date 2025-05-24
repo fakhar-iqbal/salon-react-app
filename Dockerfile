@@ -13,7 +13,7 @@ CMD ["npm","run","build"]
 FROM nginx:1.23-alpine
 WORKDIR /program filesx86/nginx/html
 RUN rm -rf *
-COPY --from=build /home/ubuntu/salon-react-app/app/build .
+COPY /home/ubuntu/salon-react-app/app/build .
 EXPOSE 80
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
