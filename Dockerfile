@@ -10,11 +10,11 @@ CMD ["npm","run","build"]
 
 # serve with nginix
 
-FROM nginix:1.23-alpine
-WORKDIR /program filesx86/nginix/html
+FROM nginx:1.23-alpine
+WORKDIR /program filesx86/nginx/html
 RUN rm -rf *
 COPY --from=build /app/dist .
 EXPOSE 80
-ENTRYPOINT ["nginix", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 
