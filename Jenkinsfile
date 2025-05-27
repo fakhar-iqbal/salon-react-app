@@ -4,7 +4,7 @@ pipeline {
     
     environment {
         // DOCKER_HUB_CREDENTIALS_ID = 'your-dockerhub-credentials-id' // Set in Jenkins Credentials
-        PROJECT_NAME_CI = "SALON"
+        PROJECT_NAME_CI = "salon"
         COMPOSE_FILE_CI = "docker-compose-ci.yaml"
         // DOCKERHUB_USERNAME = "yourdockerhubusername" // Define your Docker Hub username
     }
