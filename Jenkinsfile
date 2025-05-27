@@ -1,91 +1,145 @@
-pipeline {
-    agent any // Run on any available Jenkins agent
+// pipeline {
+//     agent any // Run on any available Jenkins agent
 
     
+//     environment {
+//         PROJECT_NAME_CI = "salon"
+//         COMPOSE_FILE_CI = "docker-compose-ci.yaml"
+//     }
+
+//     tools {
+//         git 'Default' // Ensure Git is configured in Jenkins Global Tool Configuration
+//     }
+
+//     stages {
+//         stage('Checkout Code') {
+//             steps {
+//                 echo 'Checking out code from GitHub...'
+//                 git branch: 'main', url: 'https://github.com/fakhar-iqbal/salon-react-app.git' // Replace with your repo URL
+//             }
+//         }
+
+//         stage('Build Images (using CI compose file)') {
+//     steps {
+//         dir("${env.WORKSPACE}") {
+//             echo "Building Docker images using docker-compose-ci.yaml for project: salon"
+//             sh 'docker-compose -p salon -f docker-compose-ci.yaml build --no-cache frontend_ci'
+//         }
+//     }
+// }
+
+
+        
+
+//         stage('Run Containerized Application (from CI compose file)') {
+//             steps {
+//                 echo "Starting containers using ${COMPOSE_FILE_CI} for project ${PROJECT_NAME_CI}..."
+//                 sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} up -d"
+                
+//                 sh "sleep 15" // Give services time to start
+//                 sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} ps"
+                
+//             }
+//         }
+
+//     }
+
+//     post {
+//         always {
+//             echo 'Pipeline finished.'
+            
+//         }
+//         success {
+//             echo 'Pipeline successful!'
+//         }
+//         failure {
+//             echo 'Pipeline failed.'
+//         }
+//     }
+// }
+
+pipeline {
+    agent any
+
     environment {
-        // DOCKER_HUB_CREDENTIALS_ID = 'your-dockerhub-credentials-id' // Set in Jenkins Credentials
         PROJECT_NAME_CI = "salon"
         COMPOSE_FILE_CI = "docker-compose-ci.yaml"
-        // DOCKERHUB_USERNAME = "yourdockerhubusername" // Define your Docker Hub username
     }
 
     tools {
-        git 'Default' // Ensure Git is configured in Jenkins Global Tool Configuration
+        git 'Default'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
                 echo 'Checking out code from GitHub...'
-                git branch: 'main', url: 'https://github.com/fakhar-iqbal/salon-react-app.git' // Replace with your repo URL
-                // Example: git branch: 'main', url: 'https://github.com/yourusername/my-react-project.git'
+                git branch: 'main', url: 'https://github.com/fakhar-iqbal/salon-react-app.git'
+            }
+        }
+
+        stage('Stop Previous Containers') {
+            steps {
+                script {
+                    echo 'Stopping any existing containers for this project...'
+                    sh """
+                        docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} down || true
+                        docker system prune -f
+                    """
+                }
             }
         }
 
         stage('Build Images (using CI compose file)') {
-    steps {
-        dir("${env.WORKSPACE}") {
-            echo "Building Docker images using docker-compose-ci.yaml for project: salon"
-            sh 'docker-compose -p salon -f docker-compose-ci.yaml build --no-cache frontend_ci'
-        }
-    }
-}
-
-
-        // Optional Stage: Push images to Docker Hub (if required for your workflow)
-        // stage('Push Images to Docker Hub') {
-        //     when {
-        //         branch 'main' // Only push for main branch builds, for example
-        //     }
-        //     steps {
-        //         echo "Logging into Docker Hub and pushing images..."
-        //         withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-        //             sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
-        //             // Tag images before pushing if your compose build doesn't tag them with your username
-        //             sh "docker tag ${PROJECT_NAME_CI}_frontend_ci ${DOCKERHUB_USERNAME}/my-react-app-frontend-ci:latest"
-        //             sh "docker tag ${PROJECT_NAME_CI}_backend_ci ${DOCKERHUB_USERNAME}/my-react-app-backend-ci:latest"
-        //             sh "docker push ${DOCKERHUB_USERNAME}/my-react-app-frontend-ci:latest"
-        //             sh "docker push ${DOCKERHUB_USERNAME}/my-react-app-backend-ci:latest"
-        //         }
-        //     }
-        // }
-
-        stage('Run Containerized Application (from CI compose file)') {
             steps {
-                echo "Starting containers using ${COMPOSE_FILE_CI} for project ${PROJECT_NAME_CI}..."
-                // This command will use the images built in the previous stage (or pull if not built locally)
-                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} up -d"
-                
-                // Optional: Add a small delay or health check
-                sh "sleep 15" // Give services time to start
-                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} ps"
-                // echo "Frontend CI should be accessible on EC2_IP:${env.CI_FRONTEND_PORT:-8081}" // Assuming you set CI_FRONTEND_PORT
-                // echo "Backend CI should be accessible on EC2_IP:${env.CI_BACKEND_PORT:-3002}"
+                dir("${env.WORKSPACE}") {
+                    echo "Building Docker images using ${COMPOSE_FILE_CI} for project: ${PROJECT_NAME_CI}"
+                    echo "This will use Dockerfile.jenkins for full npm build process"
+                    sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} build --no-cache frontend_ci"
+                }
             }
         }
 
-        // Optional Stage: Run Tests (Example)
-        // stage('Test Application') {
-        //     steps {
-        //         echo 'Running backend tests...'
-        //         // Example: sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} exec -T backend_ci npm test"
-        //         // For frontend tests, you might run them during the frontend Docker build stage or separately.
-        //     }
-        // }
+        stage('Run Containerized Application') {
+            steps {
+                echo "Starting containers using ${COMPOSE_FILE_CI} for project ${PROJECT_NAME_CI}..."
+                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} up -d"
+                
+                echo "Waiting for services to start..."
+                sh "sleep 20"
+                
+                echo "Checking container status..."
+                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} ps"
+                
+                echo "Application should be available at: http://51.21.139.120:8081/"
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                script {
+                    echo 'Performing health check...'
+                    sh """
+                        sleep 10
+                        curl -f http://localhost:8081/ || exit 1
+                        echo "Health check passed!"
+                    """
+                }
+            }
+        }
     }
 
     post {
         always {
             echo 'Pipeline finished.'
-            // Optional: Clean up CI containers and networks
-            // Be cautious with 'down -v' if you want to inspect data/logs from CI runs.
-            // sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} down --remove-orphans"
+            sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} logs --tail=50"
         }
         success {
-            echo 'Pipeline successful!'
+            echo 'Pipeline successful! Application is running at http://51.21.139.120:8081/'
         }
         failure {
-            echo 'Pipeline failed.'
+            echo 'Pipeline failed. Cleaning up...'
+            sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} down || true"
         }
     }
 }
