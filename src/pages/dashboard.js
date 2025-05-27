@@ -147,7 +147,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <h2 className="underline main-heading">Dashboard Page</h2>
+      <h2 className="underline main-heading">Dashboard</h2>
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -155,21 +155,21 @@ export default function Dashboard() {
           <div className="dashboard-top">
             <div className="dashboard-card">
               <div>
-                <h4 className="card-top-heading">Total Users in System</h4>
+                <h4 className="card-top-heading">Total Users</h4>
                 <h2>{totalUsers} Users</h2>
               </div>
               <img src={WaveIcon} />
             </div>
             <div className="dashboard-card">
               <div>
-                <h4 className="card-top-heading">Subscribed users in System</h4>
+                <h4 className="card-top-heading">Subscribed users</h4>
                 <h2>{totalPosts} Subscribers</h2>
               </div>
               <img src={WaveIcon} />
             </div>
             <div className="dashboard-card">
               <div>
-                <h4 className="card-top-heading">Total Trainerzz</h4>
+                <h4 className="card-top-heading">Total Trainers</h4>
                 <h2>{totalChatRooms} Trainers</h2>
               </div>
               <img src={WaveIcon} />
