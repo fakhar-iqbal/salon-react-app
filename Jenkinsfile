@@ -1,10 +1,7 @@
 pipeline {
     agent any // Run on any available Jenkins agent
 
-    triggers {
-        githubPush()
-    }
-
+    
     environment {
         // DOCKER_HUB_CREDENTIALS_ID = 'your-dockerhub-credentials-id' // Set in Jenkins Credentials
         PROJECT_NAME_CI = "SALON"
