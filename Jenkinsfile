@@ -23,13 +23,14 @@ pipeline {
         }
 
         stage('Build Images (using CI compose file)') {
-            steps {
-                echo "Building Docker images using ${COMPOSE_FILE_CI} for project: ${PROJECT_NAME_CI}"
-                // The 'build' directive in docker-compose-ci.yml will handle building
-                // both frontend_ci and backend_ci services based on their Dockerfiles.
-                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} build --no-cache frontend_ci"
-            }
+    steps {
+        dir("${env.WORKSPACE}") {
+            echo "Building Docker images using docker-compose-ci.yaml for project: salon"
+            sh 'docker-compose -p salon -f docker-compose-ci.yaml build --no-cache frontend_ci'
         }
+    }
+}
+
 
         // Optional Stage: Push images to Docker Hub (if required for your workflow)
         // stage('Push Images to Docker Hub') {
