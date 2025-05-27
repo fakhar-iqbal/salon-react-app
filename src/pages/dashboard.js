@@ -162,7 +162,7 @@ export default function Dashboard() {
             </div>
             <div className="dashboard-card">
               <div>
-                <h4 className="card-top-heading">Subscribed users</h4>
+                <h4 className="card-top-heading">Subscribed Userzz</h4>
                 <h2>{totalPosts} Subscribers</h2>
               </div>
               <img src={WaveIcon} />
