@@ -155,7 +155,7 @@ export default function Dashboard() {
           <div className="dashboard-top">
             <div className="dashboard-card">
               <div>
-                <h4 className="card-top-heading">Total Users</h4>
+                <h4 className="card-top-heading">Total User</h4>
                 <h2>{totalUsers} people</h2>
               </div>
               <img src={WaveIcon} />
