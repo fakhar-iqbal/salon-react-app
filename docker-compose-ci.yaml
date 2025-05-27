@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  frontend_ci: # Different service name
+    build:
+      context: ./frontend # Jenkins will use this to build the image
+      dockerfile: Dockerfile
+    ports:
+      - "8081:3000" # Different host port to avoid conflict
+    restart: always
+    depends_on:
+      - backend_ci
+
+  backend_ci: # Different service name
+    build:
+      context: ./backend # Jenkins will use this to build the image
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3001" # Different host port
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DB_HOST=db_ci
+      - DB_USER=ci_webappuser
+      - DB_PASSWORD=ci_webappsecret
+      - DB_NAME=ci_webappdb
+      - DB_PORT=5432
+    volumes:
+      - ./backend:/usr/src/app/ # Mounts the checked-out backend code (as requested)
+      # Note: For a typical CI build, this volume mount for code is often not needed
+      # as the 'COPY . .' in the Dockerfile handles getting the code into the image.
+      # However, the assignment specifically asks to "Attach a volume for the code".
+      # This is more useful for development workflows or if tests were run directly on mounted code.
+      # For the frontend, the build output is static, so a code volume isn't standard after build.
+    depends_on:
+      db_ci:
+        condition: service_healthy
+    restart: always
+
+  
+volumes:
+  postgres_data_ci:
+
