@@ -3,8 +3,8 @@ FROM node:alpine3.18 AS build
 
 WORKDIR /app
 COPY . .
-# RUN npm install
-# RUN npm run build
+RUN npm install
+RUN npm run build
 
 # serve with nginx  
 FROM nginx:1.23-alpine
