@@ -73,7 +73,7 @@ const Login = (props) => {
             fieldStyle={{ width: "70%" }}
           />
         </div>
-        {err ? <p className="error">Invalid Credentials!</p> : ""}
+        {err ? <p className="error">Invalid Credentials given!</p> : ""}
 
         <div className="button-container">
           <button
