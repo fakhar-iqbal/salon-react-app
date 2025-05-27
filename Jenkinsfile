@@ -57,8 +57,8 @@ pipeline {
                 // Optional: Add a small delay or health check
                 sh "sleep 15" // Give services time to start
                 sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} ps"
-                echo "Frontend CI should be accessible on EC2_IP:${env.CI_FRONTEND_PORT:-8081}" // Assuming you set CI_FRONTEND_PORT
-                echo "Backend CI should be accessible on EC2_IP:${env.CI_BACKEND_PORT:-3002}"
+                // echo "Frontend CI should be accessible on EC2_IP:${env.CI_FRONTEND_PORT:-8081}" // Assuming you set CI_FRONTEND_PORT
+                // echo "Backend CI should be accessible on EC2_IP:${env.CI_BACKEND_PORT:-3002}"
             }
         }
 
