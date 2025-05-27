@@ -95,6 +95,12 @@ pipeline {
                 dir("${env.WORKSPACE}") {
                     echo "Building Docker images using ${COMPOSE_FILE_CI} for project: ${PROJECT_NAME_CI}"
                     echo "This will use Dockerfile.jenkins for full npm build process"
+
+                    script {
+                    env.DOCKER_CLIENT_TIMEOUT = '300'
+                    env.COMPOSE_HTTP_TIMEOUT = '300'
+                    }
+
                     sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} build --no-cache frontend_ci"
                 }
             }
