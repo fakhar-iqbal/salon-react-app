@@ -6,7 +6,7 @@ services:
       context: . ###assuming docker file is present in cuurent dir
     container_name: react-app
     ports:
-      - "80:3000"   #exposes react development server on port 80
+      - "8082:3000"   #exposes react development server on port 80
     volumes:
       - ./src:/usr/src/app
       - /usr/src/app/node_modules
