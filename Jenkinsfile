@@ -27,7 +27,7 @@ pipeline {
                 echo "Building Docker images using ${COMPOSE_FILE_CI} for project: ${PROJECT_NAME_CI}"
                 // The 'build' directive in docker-compose-ci.yml will handle building
                 // both frontend_ci and backend_ci services based on their Dockerfiles.
-                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} build --no-cache frontend_ci backend_ci"
+                sh "docker-compose -p ${PROJECT_NAME_CI} -f ${COMPOSE_FILE_CI} build --no-cache frontend_ci"
             }
         }
 
