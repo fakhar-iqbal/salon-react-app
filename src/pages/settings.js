@@ -95,7 +95,7 @@ const Settings = (props) => {
 
   return (
     <div className="settings">
-      <h2 className="settings-title">Settings</h2>
+      <h2 className="settings-title">Settin</h2>
       <div>
         <h3>Security</h3>
         <div className="settings-fields-container">
@@ -103,7 +103,7 @@ const Settings = (props) => {
             <input
               value={passwordupdate}
               onChange={(e) => setpasswordupdate(e.target.value)}
-              placeholder="Change Password"
+              placeholder="Change Passwordzzz"
             />
             <IoLockClosedOutline className="icon" />
           </div>
