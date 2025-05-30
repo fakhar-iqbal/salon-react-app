@@ -93,8 +93,8 @@ const Login = (props) => {
           backgroundColor: '#f9f9f9',
           fontSize: '14px'
         }}>
-          <p>admin email: admin@admin.com</p>
-          <p>password: admin123</p>
+          <p>Admin email: admin@admin.com</p>
+          <p>Password: admin123</p>
         </div>
       </div>
     </div>
