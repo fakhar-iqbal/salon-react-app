@@ -84,6 +84,18 @@ const Login = (props) => {
             Login
           </button>
         </div>
+
+        <div style={{ 
+          marginTop: '20px', 
+          padding: '10px', 
+          border: '1px solid #ccc', 
+          borderRadius: '5px', 
+          backgroundColor: '#f9f9f9',
+          fontSize: '14px'
+        }}>
+          <p>admin email: admin@admin.com</p>
+          <p>password: admin123</p>
+        </div>
       </div>
     </div>
   );
