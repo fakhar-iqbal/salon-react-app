@@ -1,12 +1,40 @@
-# build from app
+# # build from app
+# FROM node:alpine3.18 AS build
+
+# WORKDIR /app
+# COPY . .
+# RUN npm install
+# RUN npm run build
+
+# # serve with nginx  
+# FROM nginx:1.23-alpine
+# WORKDIR /usr/share/nginx/html
+# RUN rm -rf *
+# COPY --from=build /app/build .
+# EXPOSE 80
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+# Build stage
 FROM node:alpine3.18 AS build
 
+# Set Node.js memory limit for low-memory environments
+ENV NODE_OPTIONS="--max-old-space-size=2560"
+
 WORKDIR /app
+
+# Copy package files first for better Docker layer caching
+COPY package*.json ./
+
+# Install dependencies with memory optimization
+RUN npm ci --silent --no-optional
+
+# Copy source code
 COPY . .
-RUN npm install
+
+# Build the React app
 RUN npm run build
 
-# serve with nginx  
+# Production stage - serve with nginx  
 FROM nginx:1.23-alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf *
