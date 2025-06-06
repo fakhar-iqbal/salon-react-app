@@ -5,7 +5,7 @@ const Headline = (props) => {
   return (
     <div className="headline" style={{ ...props.style }}>
       <div className="center-container">
-        Welcome {props.text}
+        Welcome Aown!
         {/* <img
           src={handImage}
           style={{ width: "30.49px", height: "33.28px" }}
